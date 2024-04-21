@@ -1,0 +1,254 @@
+#version 330 core
+out vec4 FragColor;
+
+in vec2 UV;
+
+// @uniform_name render
+// @uniform_type int
+uniform sampler2D render;
+
+// @uniform_name bloomBlur
+// @uniform_type int
+uniform sampler2D bloomBlur;
+
+// @uniform_name DepthMap
+// @uniform_type int
+uniform sampler2D DepthMap;
+
+// @uniform_name Bloom
+// @uniform_type int
+uniform int Bloom;
+
+// @uniform_name exposure
+// @uniform_type float
+uniform float exposure;
+
+// @uniform_name Negative
+// @uniform_type int
+uniform int Negative;
+
+// @uniform_name Grayscale
+// @uniform_type int
+uniform int Grayscale;
+
+// @uniform_name Blur
+// @uniform_type int
+uniform int Blur;
+
+// @uniform_name SSAO
+// @uniform_type int
+uniform int SSAO;
+
+// @uniform_name radius
+// @uniform_type float
+uniform float radius;
+
+// @uniform_name numSamples
+// @uniform_type int
+uniform int numSamples;
+
+// @uniform_name colorTemperature
+// @uniform_type float
+uniform float colorTemperature;
+
+// @uniform_name Temperature
+// @uniform_type int
+uniform int Temperature;
+
+// @uniform_name saturationFactor
+// @uniform_type float
+uniform float saturationFactor;
+
+// @uniform_name Saturation
+// @uniform_type int
+uniform int Saturation;
+
+// @uniform_name Vignette
+// @uniform_type int
+uniform int Vignette;
+
+// @uniform_name smooth_vignette
+// @uniform_type float
+uniform float smooth_vignette;
+
+// @uniform_name radio_vignette
+// @uniform_type float
+uniform float radio_vignette;
+
+const vec2 textureSize = vec2(1300.0, 950.0);
+
+//BloomEffect
+vec3 applyGaussianBlur(sampler2D textureSampler, vec2 uv) {
+   vec3 result = vec3(0.0);
+
+    // Parámetros del desenfoque gaussiano
+    const float sigma = 8.0; // Desviación estándar mayor para un desenfoque más pronunciado
+    const int kernelSize = 12; // Tamaño del kernel (5x5)
+    float kernelSum = 0.0;
+
+    // Construir el kernel de desenfoque gaussiano
+    float kernel[144];
+    for (int i = 0; i < kernelSize; ++i) {
+        for (int j = 0; j < kernelSize; ++j) {
+            int index = i * kernelSize + j;
+            float x = float(i) - float(kernelSize) / 2.0;
+            float y = float(j) - float(kernelSize) / 2.0;
+            kernel[index] = exp(-(x * x + y * y) / (2.0 * sigma * sigma));
+            kernelSum += kernel[index];
+        }
+    }
+
+    // Normalizar el kernel
+    for (int i = 0; i < kernelSize * kernelSize; ++i) {
+        kernel[i] /= kernelSum;
+    }
+
+    // Aplicar el kernel de desenfoque gaussiano alrededor de cada píxel en la textura
+    for (int i = -kernelSize / 2; i <= kernelSize / 2; ++i) {
+        for (int j = -kernelSize / 2; j <= kernelSize / 2; ++j) {
+            vec2 offset = vec2(float(i), float(j)) / textureSize;
+            result += texture(textureSampler, uv + offset).rgb * kernel[(i + kernelSize / 2) * kernelSize + (j + kernelSize / 2)];
+        }
+    }
+
+    return result;
+}
+
+float random(vec2 uv) {
+    return fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+void main()
+{
+    vec2 uvs = vec2(UV.x, -UV.y);
+    vec3 col = texture(render, UV).rgb;
+
+    vec3 result = col;
+    result += texture(bloomBlur, UV).rgb;
+
+    //Bloom
+    if(Bloom == 1)
+    {
+       const float gamma = 2.2;
+       vec3 bloomColor = applyGaussianBlur(bloomBlur, UV);
+       bloomColor *= exposure;
+       //bloomColor += bloomColor;
+       bloomColor = vec3(1.0) - exp(-bloomColor);
+       bloomColor = pow(bloomColor, vec3(1.0 / gamma));
+       result += bloomColor;
+    }
+
+    //SSAO
+    /*
+    if(SSAO == 1)
+    {
+        vec3 fragPos = texture(DepthMap, UV).xyz;
+        float fragDepth = fragPos.z;
+        vec3 normal = normalize(texture(render, UV).xyz);
+
+        float occlusion = 0.0;
+        for (int i = 0; i < numSamples; ++i) {
+            // Generate random sample in screen space
+            vec2 sampleOffset = radius * vec2(cos(random(vec2(i, i + 1))), sin(random(vec2(i + 2, i + 3))));
+            vec3 sampleCoords = vec3(sampleOffset / textureSize, fragDepth);
+
+            // Fetch sample depth and normal
+            float sampleDepth = texture(DepthMap, sampleCoords.xy).r;
+            vec3 sampleNormal = normalize(texture(render, sampleCoords.xy).xyz);
+
+            // Compute occlusion factor using depth and normal differences
+            float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth));
+            float angleCheck = dot(normal, sampleNormal);
+            occlusion += (sampleDepth >= sampleCoords.z + 0.01) ? rangeCheck * max(0.0, angleCheck) : 0.0;
+        }
+
+         occlusion /= float(numSamples);
+         result += vec3(1.0 - occlusion);
+    }
+    */
+
+    //Blur
+    if(Blur == 1)
+    {
+        const float offset = 1.0 / 300.0;
+
+        vec2 offsets[9] = vec2[](
+            vec2(-offset,  offset), // top-left
+            vec2( 0.0f,    offset), // top-center
+            vec2( offset,  offset), // top-right
+            vec2(-offset,  0.0f),   // center-left
+            vec2( 0.0f,    0.0f),   // center-center
+            vec2( offset,  0.0f),   // center-right
+            vec2(-offset, -offset), // bottom-left
+            vec2( 0.0f,   -offset), // bottom-center
+            vec2( offset, -offset)  // bottom-right
+        );
+
+        float kernel[9] = float[](
+            1.0 / 16, 2.0 / 16, 1.0 / 16,
+            2.0 / 16, 4.0 / 16, 2.0 / 16,
+            1.0 / 16, 2.0 / 16, 1.0 / 16
+        );
+
+        for (int i = 0; i < 9; i++)
+        {
+            result += texture(render, UV + offsets[i]).rgb * kernel[i];
+        }
+
+         result -= col;
+    }
+
+    //Temperature
+    if(Temperature == 1)
+    {
+        vec3 modifiedColor = result;
+        if (colorTemperature < 0.0) {
+            // Transformación hacia colores más fríos
+            modifiedColor.r += abs(colorTemperature) * 0.5; // Aumentar el rojo
+            modifiedColor.b -= abs(colorTemperature) * 0.5; // Reducir el azul
+        } else if (colorTemperature > 0.0) {
+            // Transformación hacia colores más cálidos
+            modifiedColor.r -= abs(colorTemperature) * 0.5; // Reducir el rojo
+            modifiedColor.b += abs(colorTemperature) * 0.5; // Aumentar el azul
+        }
+         modifiedColor = clamp(modifiedColor, 0.0, 1.0);
+         result = modifiedColor;
+    }
+
+    //Vignette
+    if(Vignette == 1)
+    {
+        float center = 0.5f;
+        //float smooth_vignette = 0.109f;
+       // float radio = 0.3f;
+        float c = length(UV - center);
+        float circle = smoothstep(c - smooth_vignette, c + smooth_vignette, radio_vignette);
+        result *= circle;
+    }
+
+    //Saturation
+    if(Saturation == 1)
+    {
+        vec3 originalColor = result;
+        float luminance = dot(originalColor, vec3(0.2126, 0.7152, 0.0722));
+        vec3 saturatedColor = mix(vec3(luminance), originalColor, saturationFactor);
+        result = saturatedColor;
+    }
+
+    //Negative
+    if(Negative == 1)
+    {
+        result =  1 - result;
+    }
+
+    //Grayscale
+    if(Grayscale == 1)
+    {
+        float average = (result.r + result.g + result.b) / 3.0;
+        result = vec3(average, average, average);
+    }
+
+    FragColor = vec4(result, 1.0f);
+
+    //FragColor = vec4(vec3(1.0f, 0.0f, 0.0f), 1.0f);
+} 

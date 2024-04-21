@@ -1,0 +1,19 @@
+#version 330 core
+
+in vec2 UV;
+
+out vec4 color;
+
+uniform sampler2D basecolor;
+uniform vec3 LightAmbientColor;
+
+void main(){
+
+	vec4 colorFinal = texture(basecolor, UV);
+
+	if (colorFinal.a < 0.009) {
+        discard;
+    }
+
+	color = colorFinal * vec4(LightAmbientColor, colorFinal.a);
+}

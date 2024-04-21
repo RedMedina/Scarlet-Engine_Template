@@ -1,0 +1,362 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de origen">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Engine">
+      <UniqueIdentifier>{50834f5c-5d59-4431-aad6-128c731a802c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Engine">
+      <UniqueIdentifier>{41894be6-b9e9-4f40-a0f2-0955b5993e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Render">
+      <UniqueIdentifier>{b13ecce5-31b0-4aa7-83ee-5670e64fddbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Render">
+      <UniqueIdentifier>{f653219e-25f9-436e-92c1-3d5bcd4b5246}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Shaders">
+      <UniqueIdentifier>{24025c86-3bcb-4f4d-be63-d46059eb5241}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Loaders">
+      <UniqueIdentifier>{9d0995ef-5fff-45be-b7d9-811cb14017f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\ImGui">
+      <UniqueIdentifier>{6047f6d3-81e2-4c86-83be-39745ba2b703}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\ImGui">
+      <UniqueIdentifier>{541ac767-e141-41aa-a687-2ec724901be5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\CustomScripts">
+      <UniqueIdentifier>{5bbeacb2-d9ef-48a3-a8db-47635f61bb57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Loaders\Animation">
+      <UniqueIdentifier>{12437338-0e2f-4552-a8c5-50938d7e7da4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameobject.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderOptions.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMatrix.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Directional_Light.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Point_Light.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MainLightData.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_demo.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_glfw.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_opengl3.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_stdlib.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>Archivos de origen\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Post_processing.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MainSettings.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioSource.cpp">
+      <Filter>Archivos de origen\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="TextUI.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="LOD.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedModel.cpp">
+      <Filter>Archivos de origen\Engine</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Component.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Gameobject.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderOptions.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Manager.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Hierarchy.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LightOptions.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMatrix.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticMeshLoader.h">
+      <Filter>Archivos de encabezado\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureLoader.h">
+      <Filter>Archivos de encabezado\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Directional_Light.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Point_Light.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MainLightData.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_glfw.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_opengl3.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_opengl3_loader.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_stdlib.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_rectpack.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_textedit.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imstb_truetype.h">
+      <Filter>Archivos de encabezado\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Post_processing.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MainSettings.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioSource.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="TextUI.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Fog.h">
+      <Filter>Archivos de encabezado\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="WaterEffect.h">
+      <Filter>Archivos de encabezado\CustomScripts</Filter>
+    </ClInclude>
+    <ClInclude Include="LOD.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedModel.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Archivos de encabezado\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Animdata.h">
+      <Filter>Archivos de encabezado\Loaders\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="assimp_glm_helpers.h">
+      <Filter>Archivos de encabezado\Loaders\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="bone.h">
+      <Filter>Archivos de encabezado\Loaders\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Archivos de encabezado\Loaders\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelAnim.h">
+      <Filter>Archivos de encabezado\Loaders\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Archivos de encabezado\Loaders\Animation</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="skybox.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="skybox.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="model.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="model.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="collider.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="collider.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="post_process.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="post_process.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="text.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="text.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="billboard.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="billboard.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="terrain.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="terrain.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="water.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="water.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="anim_model.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="anim_model.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

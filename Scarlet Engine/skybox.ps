@@ -1,0 +1,37 @@
+#version 330 core
+
+//out vec4 FragColor;
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 FragColorHDR;
+
+in vec3 TexCoords;
+
+//uniform samplerCube skybox;
+
+// @uniform_name Color
+// @uniform_type vec3
+uniform vec3 Color;
+
+// @uniform_name light_direction
+// @uniform_type vec3
+uniform vec3 light_direction;
+
+// @uniform_name light_color
+// @uniform_type vec3
+uniform vec3 light_color;
+
+void main()
+{    
+    //FragColor = texture(skybox, TexCoords);
+
+    float center = 0.5f;
+    float smooth_sun = 0.109f;
+    float radio = 0.3f;
+    float c = length(TexCoords.xy - light_direction.xy);
+    float circle = smoothstep(c - smooth_sun, c + smooth_sun, radio);
+
+    vec3 sun = circle * light_color;
+
+    FragColor = vec4(Color, 1.0f) + vec4(sun, 1.0f);
+    FragColorHDR = vec4(0.0);
+}

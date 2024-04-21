@@ -1,0 +1,17 @@
+#version 330 core
+
+//out vec4 FragColor;
+
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 FragColorHDR;
+
+// @uniform_name color
+// @uniform_type vec4
+uniform vec4 color;
+
+
+void main()
+{
+	FragColor = color;
+	FragColorHDR = vec4(0.0);
+}
