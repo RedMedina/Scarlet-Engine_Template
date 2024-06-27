@@ -154,8 +154,7 @@ void Terrain::Update()
 
 void Terrain::Draw()
 {
-    if(MainSettings::RenderN > 1)
-    {
+    if(MainSettings::RenderN > 1){
 
     
 

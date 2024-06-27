@@ -61,6 +61,17 @@ Post_processing::Post_processing()
 	tex_2.IdTexture = *MainLightData::POSTMAP_DEPTH;
 	tex_2.Name = "DepthMap";
 	mat->Textures.push_back(tex_2);
+
+
+	effects->Bloom = true;
+	effects->Exposure = 0.6f;
+	effects->Temperature = true;
+	effects->ColorTemperature = 0.023f;
+	effects->Saturation = true;
+	effects->SaturationValue = 1.373f;
+	effects->Vignette = true;
+	effects->Vignette_Radio = 0.565f;
+	effects->Vignette_Smooth = 0.278f;
 }
 
 void Post_processing::GetRender()

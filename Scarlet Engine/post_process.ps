@@ -82,12 +82,12 @@ vec3 applyGaussianBlur(sampler2D textureSampler, vec2 uv) {
    vec3 result = vec3(0.0);
 
     // Parámetros del desenfoque gaussiano
-    const float sigma = 8.0; // Desviación estándar mayor para un desenfoque más pronunciado
-    const int kernelSize = 12; // Tamaño del kernel (5x5)
+    const float sigma = 5.0; // Desviación estándar mayor para un desenfoque más pronunciado  8
+    const int kernelSize = 5; // Tamaño del kernel (5x5) 12 - 144
     float kernelSum = 0.0;
 
     // Construir el kernel de desenfoque gaussiano
-    float kernel[144];
+    float kernel[25];
     for (int i = 0; i < kernelSize; ++i) {
         for (int j = 0; j < kernelSize; ++j) {
             int index = i * kernelSize + j;

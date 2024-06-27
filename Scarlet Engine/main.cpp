@@ -14,9 +14,9 @@ using namespace std;
 int main()
 {
 	Render* Game_Engine = new Render(1300, 950, "Scarlet Template", 300, 50);
-	Scene_Manager* Scene_Control = new Scene_Manager;
 	Post_processing* pos = new Post_processing;
-
+	Scene_Manager* Scene_Control = new Scene_Manager;
+	
 	while(true)
 	{
 		// Iniciar el frame de ImGui

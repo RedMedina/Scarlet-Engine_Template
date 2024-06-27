@@ -19,9 +19,17 @@ uniform sampler2D basecolor;
 // @uniform_type int
 uniform sampler2D normalmap;
 
+// @uniform_name emissivemap
+// @uniform_type int
+uniform sampler2D emissivemap;
+
 // @uniform_name HDR
 // @uniform_type int
 uniform int HDR;
+
+// @uniform_name EmissionColor
+// @uniform_type vec3
+uniform vec3 EmissionColor;
 
 // @uniform_name exposure
 // @uniform_type float
@@ -153,8 +161,16 @@ const bool gamma = true;
 void main()
 {
 	vec4 color = texture(basecolor, UV);
-	vec3 normal_tex = texture(normalmap, UV).rgb;
-	normal_tex = normalize(normal_tex * 2.0 - 1.0);
+	vec3 normal_tex;
+    if (textureSize(normalmap, 0) != 0)
+    {
+        normal_tex = texture(normalmap, UV).rgb;
+        normal_tex = normalize(normal_tex * 2.0 - 1.0);
+    }
+    else {
+       normal_tex = outNormals;
+       normal_tex = normalize(normal_tex);
+    }
 
 	vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
 	//vec3 lightDir = normalize(-light_direction);
@@ -184,9 +200,20 @@ void main()
 
     if(HDR == 1)
     {
-        result *= exposure;
-        FragColorHDR = vec4(result, color.a);
-        FragColor = vec4(0.0, 0.0, 0.0, 1.0f);
+        if (textureSize(emissivemap, 0) != 0)
+        {
+             vec3 emissiveColor = texture(emissivemap, UV).rgb;
+             emissiveColor *= exposure;
+             FragColorHDR = vec4(emissiveColor, color.a);
+             FragColor = vec4(result, color.a);
+        }
+        else
+        {
+            result *= exposure;
+            FragColorHDR = vec4(result, color.a);
+            FragColor = vec4(0.0, 0.0, 0.0, 1.0f);
+        }
+       
     }
     else if (HDR == 0)
     {

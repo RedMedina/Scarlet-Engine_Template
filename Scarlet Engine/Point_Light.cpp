@@ -27,12 +27,12 @@ void Point_Light::Draw()
 	//GuiIm Att
 	if (MainSettings::RenderN == MainSettings::NumRenders)
 	{
-		ImGui::ColorPicker3("Point Ambient", &AmbientColor->x);
-		ImGui::ColorPicker3("Point Specular", &SpecularColor->x);
-		ImGui::ColorPicker3("Point Diffuse", &DiffuseColor->x);
-		ImGui::SliderFloat("Constant", &this->Constant, 0.0f, 4.0f);
-		ImGui::SliderFloat("Linear", &this->Linear, 0.0f, 2.0f);
-		ImGui::SliderFloat("Cuadratic", &this->Cuadratic, 0.0f, 2.0f);
+		ImGui::ColorPicker3(("Point Ambient " + std::to_string(UINum)).c_str(), &AmbientColor->x);
+		ImGui::ColorPicker3(("Point Specular " + std::to_string(UINum)).c_str(), &SpecularColor->x);
+		ImGui::ColorPicker3(("Point Diffuse " + std::to_string(UINum)).c_str(), &DiffuseColor->x);
+		ImGui::SliderFloat(("Constant " + std::to_string(UINum)).c_str(), &this->Constant, 0.0f, 4.0f);
+		ImGui::SliderFloat(("Linear " + std::to_string(UINum)).c_str(), &this->Linear, 0.0f, 2.0f);
+		ImGui::SliderFloat(("Cuadratic " + std::to_string(UINum)).c_str(), &this->Cuadratic, 0.0f, 2.0f);
 	}
 
 	if (isMainLight)

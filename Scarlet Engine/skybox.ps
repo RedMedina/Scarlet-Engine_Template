@@ -20,18 +20,82 @@ uniform vec3 light_direction;
 // @uniform_type vec3
 uniform vec3 light_color;
 
+uniform sampler2D noise_tex;
+uniform float time_stars;
+
+uniform float StarsDensity;
+uniform float StarsPower;
+uniform float Exposure;
+
+uniform sampler2D aurora_tex;
+uniform float AuroraDensity;
+uniform float AuroraPower;
+uniform float time_Aurora;
+
+vec4 gaussianBlur(vec4 color, vec2 resolution, vec2 uv, vec2 direction, float radius) {
+    vec4 blurredColor = vec4(0.0);
+    float totalWeight = 0.0;
+
+    // Itera a través de los píxeles vecinos y aplica un peso gaussiano
+    for (float i = -radius; i <= radius; i++) {
+        float weight = exp(-0.5 * i * i / (radius * radius)); // Función gaussiana
+        blurredColor += color * weight;
+        totalWeight += weight;
+    }
+
+    return blurredColor / totalWeight;
+}
+
 void main()
 {    
     //FragColor = texture(skybox, TexCoords);
 
     float center = 0.5f;
-    float smooth_sun = 0.109f;
-    float radio = 0.3f;
-    float c = length(TexCoords.xy - light_direction.xy);
+    float smooth_sun = 0.009f;
+    float radio = 0.06f;
+    float c = length(TexCoords.xy - center);
     float circle = smoothstep(c - smooth_sun, c + smooth_sun, radio);
 
-    vec3 sun = circle * light_color;
+    //Stars
+    //float StarsDensity = 2.0f;
+    //float StarsPower = 30.0f;
+    float BlinkSpeed = time_stars * 0.0003f;
+    vec4 StarsColor = vec4(0.3f, 0.4f, 0.9f, 1.0f) * 10;
 
-    FragColor = vec4(Color, 1.0f) + vec4(sun, 1.0f);
-    FragColorHDR = vec4(0.0);
+    vec2 uvsStars = vec2(TexCoords.xy + BlinkSpeed);
+    vec4 NoiseTexture = texture(noise_tex, uvsStars * StarsDensity);
+    vec2 uvsStars2 = vec2(TexCoords.xy - BlinkSpeed);
+    vec4 NoiseTexture2 = texture(noise_tex, uvsStars2 * StarsDensity);
+    vec4 Stars1 = pow(clamp(NoiseTexture, 0.0, 1.0), vec4(StarsPower));
+    vec4 Stars2 = pow(clamp(NoiseTexture2, 0.0, 1.0), vec4(StarsPower));
+    vec4 StarsFinal = (Stars1 * Stars2) * StarsColor;
+    StarsFinal *= Exposure;
+
+    vec3 sun = circle * Color;
+    //sun *= 2.5f;
+
+    vec4 ZenitColor = vec4(0.01, 0.01, 0.05, 1.0f);
+
+    //Aurora
+    //float AuroraDensity = 2.8f;
+    float AuroraSpeed = time_Aurora * 0.0003f;
+    vec2 uvsAurora1 = vec2(TexCoords.xy + AuroraSpeed);
+    vec2 uvsAurora2 = vec2(TexCoords.xy - AuroraSpeed);
+    vec4 AuroraTexture1 = texture(aurora_tex, uvsAurora1 * AuroraDensity);
+    vec4 AuroraTexture2 = texture(aurora_tex, uvsAurora2 * AuroraDensity);
+    vec4 Aurora1 = pow(clamp(AuroraTexture1, 0.0, 1.0), vec4(AuroraPower));
+    vec4 Aurora2 = pow(clamp(AuroraTexture2, 0.0, 1.0), vec4(AuroraPower));
+    vec4 AuroraColor = vec4(0.8f, 0.2f, 0.7f, 1.0f);
+    
+    vec2 resolution = vec2(1024.0, 1024.0);
+    vec2 uvsky = TexCoords.xy / resolution;
+   
+    
+    vec4 AuroraFinal = (Aurora1 * Aurora2) * AuroraColor;
+    AuroraFinal *= 1.3f;
+    vec4 blurredColor = gaussianBlur(AuroraFinal, resolution, uvsky, vec2(1.0, 0.0), 5.0);
+   
+    FragColor = ZenitColor;
+    FragColorHDR = StarsFinal + vec4(sun, 1.0f);
+    //FragColorHDR = StarsFinal + vec4(sun, 1.0f) + blurredColor;
 }

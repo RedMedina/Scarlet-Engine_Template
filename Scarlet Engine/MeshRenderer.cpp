@@ -51,7 +51,7 @@ void MeshRenderer::SetMaterial(Material* m)
         Material::Texture tex;
         tex.IdTexture = *MainLightData::DEPTHMAP;
         //tex.IdTexture = 5;
-        std::cout << "SHADOW MAP ID TEXTURE " << tex.IdTexture << endl;
+        //std::cout << "SHADOW MAP ID TEXTURE " << tex.IdTexture << endl;
         tex.Name = "shadowMap";
         mat->Textures.push_back(tex);
     }
@@ -83,6 +83,8 @@ void MeshRenderer::Draw()
 
     mat->SetMat4("mvp", mvp);
     mat->SetMat4("m", model);
+    mat->SetMat4("p", CameraMatrix::ProyectionMatrix);
+    mat->SetMat4("v", CameraMatrix::ViewMatrix);
     mat->SetVec3("light_direction", *MainLightData::MainLightPos);
     mat->SetVec3("light_color", *MainLightData::MainLightColor);
     mat->SetVec3("light_specular", *MainLightData::MainLightSpecular);
@@ -116,9 +118,11 @@ void MeshRenderer::Draw()
     if(HDRColor)
     {
         mat->SetInteger("HDR", true);
+        mat->SetVec3("EmissionColor", EmissionColor);
         if(MainSettings::RenderN == MainSettings::NumRenders)
         {
-            ImGui::SliderFloat("Exposure", &exposure, 0.0f, 4.0f);
+            ImGui::SliderFloat(("Exposure " + to_string(UINum)).c_str(), &exposure, 0.0f, 4.0f);
+            ImGui::ColorPicker3(("EmissionColor " + to_string(UINum)).c_str(), &EmissionColor.x);
         }
     }
 

@@ -24,6 +24,8 @@ public:
 	bool GetPointLights = true;
 	bool HDRColor = false;
 	float exposure = 1.0f;
+	glm::vec3 EmissionColor = glm::vec3(1.0f, 1.0f, 1.0f);
+	int UINum = 0;
 
 	MeshRenderer(const char* modelpath, glm::vec3* pos, glm::vec3* rot, glm::vec3* sca);
 	void SetMaterial(Material* m);

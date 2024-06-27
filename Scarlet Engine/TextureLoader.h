@@ -146,9 +146,10 @@ public:
 	GLuint RenderTexture(int w_texture, int h_texture, int channel)
 	{
 		GLuint renderTexture;
+		glDrawBuffer(GL_COLOR_ATTACHMENT0 + channel);
 		glGenTextures(1, &renderTexture);
 		glBindTexture(GL_TEXTURE_2D, renderTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, w_texture, h_texture, 0, GL_RGBA, GL_FLOAT, NULL);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w_texture, h_texture, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

@@ -302,6 +302,9 @@
     <ClInclude Include="mesh.h">
       <Filter>Archivos de encabezado\Loaders\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Archivos de encabezado\CustomScripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="skybox.vs">

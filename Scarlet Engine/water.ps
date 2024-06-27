@@ -1,0 +1,88 @@
+#version 330 core
+
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 FragColorHDR;
+
+in vec2 UV;
+in vec3 fragPos;
+in vec3 outNormals;
+in vec4 ClipSpace;
+in vec3 ToCameraVector;
+in vec3 LightDirection;
+in vec3 TangentViewPos;
+in vec3 TangentFragPos;
+in vec3 LightDirection_tangentspace;
+in vec4 FragPosLightSpace;
+
+uniform vec3 SpecularColor;
+uniform vec4 ColorTexture;
+
+uniform sampler2D Normal1;
+uniform sampler2D Normal2;
+uniform sampler2D Render1;
+uniform sampler2D Render2_HDR;
+//uniform sampler2D RefractionTexture;
+uniform sampler2D DepthTexture;
+uniform float time;
+uniform float Alpha;
+uniform vec3 light_direction;
+
+void main()
+{
+   
+	/*Reflections UVs*/
+    vec2 ndc = (ClipSpace.xy / ClipSpace.w) / 2.0f + 0.5f;
+	vec2 refractionTexCoords = vec2(ndc.x, ndc.y);
+	vec2 reflectionTexCoords = vec2(ndc.x, 1 - ndc.y);
+
+	/*Depth Texture*/
+    float depth = texture(DepthTexture, refractionTexCoords).r;
+    float distance = 2.0f * 0.1f * 1000.0f / (1000.0f + 0.1f - (2.0f  * depth - 1.0f) * (1000.0f - 0.1f));
+    depth = gl_FragCoord.z;
+    float waterDistance = 2.0f * 0.1f * 1000.0f / (1000.0f + 0.1f - (2.0f  * depth - 1.0f) * (1000.0f - 0.1f));
+	float waterDepth = distance - waterDistance;
+
+	/*NormalMap Waves*/
+    vec4 NormalMap1 = texture(Normal1, vec2(UV.x + time, UV.y));
+    vec2 distortedTexCoords = NormalMap1.rg * 0.2f; // tiling factor
+    distortedTexCoords = UV + vec2(distortedTexCoords.x, distortedTexCoords.y + time);
+    NormalMap1 = texture(Normal1, distortedTexCoords);
+    vec2 distortion = (NormalMap1.rg * 2.0f - 1.0f) * 0.02f * clamp(waterDepth / 5.0F, 0.0f, 1.0f);
+
+    /*Refraction-Reflection UVs*/
+    refractionTexCoords += distortion;
+	refractionTexCoords = clamp(refractionTexCoords, 0.001f, 0.999f);
+	reflectionTexCoords += distortion;
+	reflectionTexCoords = clamp(reflectionTexCoords, 0.001f, 0.999f);
+
+    vec4 refraction = texture(Render1, refractionTexCoords) + texture(Render2_HDR, refractionTexCoords);
+	vec4 reflection = texture(Render1, reflectionTexCoords) + texture(Render2_HDR, reflectionTexCoords);
+
+    //vec4 refraction = texture(Render1, refractionTexCoords);
+	//vec4 reflection = texture(Render1, reflectionTexCoords);
+
+    /*Normal Mapping*/
+    vec4 Normal2 = texture(Normal2, distortedTexCoords);
+    vec3 normal = normalize(vec3(Normal2.r * 2.0f - 1.0f, Normal2.b, Normal2.g * 2.0f - 1.0f));
+
+    /*Specular Reflections*/
+    float reflectivity = 1.0f;
+    vec3 lightDir = normalize(LightDirection_tangentspace - TangentFragPos);
+    vec3 reflectLight = reflect(normalize(-light_direction), normal);
+    float specularScalar = dot(reflectLight, normalize(ToCameraVector));
+    specularScalar = max(specularScalar, 0.0f);
+	specularScalar = pow(specularScalar, 32);
+    vec3 specularLight =  SpecularColor* specularScalar * reflectivity * clamp(waterDepth, 0.0f, 1.0f);
+    specularLight *= 1.6f;
+
+    float reflectivityFactor = dot(normalize(ToCameraVector), vec3(0.0f, 1.0f, 0.0f));
+	reflectivityFactor = pow(reflectivityFactor, 0.3f);
+
+    /* Color */
+    vec4 color = ColorTexture;
+    //refraction.a = Alpha;
+    FragColor = mix(reflection, refraction, 0.3);
+	//FragColor = mix(FragColor, color, 0.15f) + vec4(specularLight, 0.0f);
+    FragColor = FragColor * color + vec4(specularLight, 0.0f);
+    FragColorHDR = vec4(specularLight, 1.0f);
+}

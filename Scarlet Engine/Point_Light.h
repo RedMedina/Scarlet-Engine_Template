@@ -9,6 +9,7 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_glfw.h"
 #include "ImGui/imgui_impl_opengl3.h"
+#include <string>
 
 class Point_Light : public Component
 {
@@ -25,6 +26,7 @@ public:
 	float Constant;
 	float Linear;
 	float Cuadratic;
+	int UINum = 0;
 
 	bool isMainLight = false;
 };
