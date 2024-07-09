@@ -124,6 +124,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Libs\glfw-3.3.8.bin.WIN64\include;Libs\glfw-3.3.8.bin.WIN64\lib-vc2019;Libs\glew-2.1.0\lib\Release\x64;Libs\x64\lib;Libs\FreeType;Libs\Assimp\include;Libs\Assimp\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmod_vc.lib;fmod64_vc.lib;fmodL_vc.lib;fmodL64_vc.lib;DLL\glfw3.lib;DLL\glfw3dll.lib;user32.lib;gdi32.lib;shell32.lib;opengl32.lib;glu32.lib;glew32.lib;freetype.lib;assimp-vc140-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/NODEFAULTLIB:MSVCRT.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -239,6 +240,8 @@
     <None Include="billboard.vs" />
     <None Include="collider.ps" />
     <None Include="collider.vs" />
+    <None Include="ditheringOpacity.ps" />
+    <None Include="ditheringOpacity.vs" />
     <None Include="model.ps" />
     <None Include="model.vs" />
     <None Include="post_process.ps" />

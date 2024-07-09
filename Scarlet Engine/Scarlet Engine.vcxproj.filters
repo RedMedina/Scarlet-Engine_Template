@@ -361,5 +361,11 @@
     <None Include="anim_model.ps">
       <Filter>Archivos de origen\Shaders</Filter>
     </None>
+    <None Include="ditheringOpacity.ps">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
+    <None Include="ditheringOpacity.vs">
+      <Filter>Archivos de origen\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,0 +1,63 @@
+#version 330 core
+
+in vec2 UV;
+in vec3 outNormals;
+in vec3 fragPos;
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 FragColorHDR;
+
+const vec2 ScreenSize = vec2(1300.0, 950.0);
+//const vec4 BaseColorT = vec4(1.0);
+uniform sampler2D basecolor;
+uniform vec3 viewPos;
+
+const float threshold = 0.6;
+
+float Fresnel(vec3 normal, vec3 viewDir, float fresnelBias, float fresnelPower)
+{
+    // Calcula el ángulo entre la normal y el vector de vista
+    float cosTheta = dot(normal, viewDir);
+    
+    // Aplica una función de Fresnel utilizando el coseno del ángulo y los parámetros de bias y power
+    float fresnelTerm = fresnelBias + (1.0 - fresnelBias) * pow(1.0 - cosTheta, fresnelPower);
+    
+    // Retorna el resultado modulado por el color de reflexión especular
+    return fresnelTerm;
+}
+
+void main()
+{
+
+    vec3 viewDir = normalize(viewPos - fragPos);
+    float fresnel = Fresnel(normalize(outNormals), viewDir, 0.1, 1.0);
+
+
+    // Matriz de Bayer de 4x4
+    int bayerMatrix[16] = int[16](
+        0, 8, 2, 10,
+        12, 4, 14, 6,
+        3, 11, 1, 9,
+        15, 7, 13, 5
+    );
+
+    // Calcular la posición del píxel en la pantalla
+    ivec2 pixelPosition = ivec2(gl_FragCoord.xy);
+
+    // Calcular el índice en la matriz de Bayer
+    int index = (pixelPosition.x % 4) + 4 * (pixelPosition.y % 4);
+    float ditherValue = float(bayerMatrix[index]) / 16.0;
+    ditherValue = ditherValue;
+
+    // Umbral para el dithering (ajustar para cambiar el efecto de transparencia)
+    //float threshold = 0.5;
+
+    // Aplicar el dithering
+    if (ditherValue > threshold) {
+        discard;  // Descartar el fragmento para simular transparencia
+    }
+
+    // Si no se descarta, aplicar el color base
+    vec4 color = texture(basecolor, UV);
+    FragColor = color;
+    FragColorHDR = vec4(0.0, 0.0, 0.0, 1.0f);
+}

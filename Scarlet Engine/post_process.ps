@@ -248,6 +248,26 @@ void main()
         result = vec3(average, average, average);
     }
 
+    if(false)
+    {
+        // Matriz de Bayer de 4x4
+        int bayerMatrix[16] = int[16](
+            0, 8, 2, 10,
+            12, 4, 14, 6,
+            3, 11, 1, 9,
+            15, 7, 13, 5
+        );
+
+        // Calcular la posición del píxel en la pantalla
+        ivec2 pixelPosition = ivec2(gl_FragCoord.xy);
+
+        // Calcular el índice en la matriz de Bayer
+        int index = (pixelPosition.x % 4) + 4 * (pixelPosition.y % 4);
+        float ditherValue = float(bayerMatrix[index]) / 16.0;
+
+        result *= ditherValue;
+    }
+
     FragColor = vec4(result, 1.0f);
 
     //FragColor = vec4(vec3(1.0f, 0.0f, 0.0f), 1.0f);

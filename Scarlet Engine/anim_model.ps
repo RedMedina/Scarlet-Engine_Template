@@ -154,15 +154,15 @@ void main()
 {
 	vec4 color = texture(basecolor1, UV);
 	vec3 normal_tex;
-    if (textureSize(normalmap1, 0) != 0)
-    {
+    //if (textureSize(normalmap1, 0) != 0)
+    //{
         normal_tex = texture(normalmap1, UV).rgb;
         normal_tex = normalize(normal_tex * 2.0 - 1.0);
-    }
-    else {
-       normal_tex = outNormals;
-       normal_tex = normalize(normal_tex);
-    }
+    //}
+    //else {
+    //   normal_tex = outNormals;
+    //   normal_tex = normalize(normal_tex);
+    //}
 
 	vec3 viewDir = normalize(TangentViewPos - TangentFragPos);
 	//vec3 lightDir = normalize(-light_direction);

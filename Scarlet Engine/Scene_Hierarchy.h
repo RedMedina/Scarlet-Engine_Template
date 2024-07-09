@@ -158,6 +158,18 @@ public:
 		dynamic_cast<MeshRenderer*>(Farola2->components[1])->UINum = 2;
 		Scenes[0]->GameObjects.push_back(Farola2);
 
+
+		//Dithering
+		GameObject* FarolaDith = new GameObject("Farola Dithering");
+		dynamic_cast<Transform*>(FarolaDith->components[0])->Position = glm::vec3(-10.0f, -5.0f, -50.0f);
+		dynamic_cast<Transform*>(FarolaDith->components[0])->Scale = glm::vec3(1.8f, 1.8f, 1.8f);
+		FarolaDith->components.push_back(new MeshRenderer("Assets/Models/Farola/farola.obj", &dynamic_cast<Transform*>(FarolaDith->components[0])->Position, &dynamic_cast<Transform*>(FarolaDith->components[0])->Rotation, &dynamic_cast<Transform*>(FarolaDith->components[0])->Scale));
+		dynamic_cast<MeshRenderer*>(FarolaDith->components[1])->settings = Scenes[0]->Render_Settings;
+		Material* DitheringMat = new Material("ditheringOpacity.vs", "ditheringOpacity.ps");
+		DitheringMat->SetTexture2D("basecolor", "Assets/Models/Farola/farola_text.png");
+		dynamic_cast<MeshRenderer*>(FarolaDith->components[1])->SetMaterial(DitheringMat);
+		Scenes[0]->GameObjects.push_back(FarolaDith);
+
 		//AudioSource
 		GameObject* AudioSource1 = new GameObject("AudioBGM1");
 		AudioSource1->components.push_back(new AudioSource("Assets/Music/CrystalTheme.mp3", glm::vec3(0.0f, 0.0f, 0.0f), true));
@@ -187,6 +199,7 @@ public:
 		Sphere_LowQ->components.push_back(new MeshRenderer("Assets/Models/LOD_Sohere/Sphere_4.obj", &dynamic_cast<Transform*>(Sphere_LowQ->components[0])->Position, &dynamic_cast<Transform*>(Sphere_LowQ->components[0])->Rotation, &dynamic_cast<Transform*>(Sphere_LowQ->components[0])->Scale));
 		dynamic_cast<MeshRenderer*>(Sphere_LowQ->components[1])->settings = Scenes[0]->Render_Settings;
 		dynamic_cast<MeshRenderer*>(Sphere_LowQ->components[1])->SetMaterial(SphereLODMat);
+
 
 		//Sphere Bill
 		/*
