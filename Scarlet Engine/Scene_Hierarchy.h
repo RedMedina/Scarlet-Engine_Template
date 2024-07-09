@@ -165,7 +165,7 @@ public:
 		dynamic_cast<Transform*>(FarolaDith->components[0])->Scale = glm::vec3(1.8f, 1.8f, 1.8f);
 		FarolaDith->components.push_back(new MeshRenderer("Assets/Models/Farola/farola.obj", &dynamic_cast<Transform*>(FarolaDith->components[0])->Position, &dynamic_cast<Transform*>(FarolaDith->components[0])->Rotation, &dynamic_cast<Transform*>(FarolaDith->components[0])->Scale));
 		dynamic_cast<MeshRenderer*>(FarolaDith->components[1])->settings = Scenes[0]->Render_Settings;
-		Material* DitheringMat = new Material("ditheringOpacity.vs", "ditheringOpacity.ps");
+		Material* DitheringMat = new Material("model.vs", "ditheringOpacity.ps");
 		DitheringMat->SetTexture2D("basecolor", "Assets/Models/Farola/farola_text.png");
 		dynamic_cast<MeshRenderer*>(FarolaDith->components[1])->SetMaterial(DitheringMat);
 		Scenes[0]->GameObjects.push_back(FarolaDith);
